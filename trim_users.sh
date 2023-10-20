@@ -4,22 +4,22 @@ ROOM_ID=$1
 
 # mx_request $endpoint
 mx_request() {
-    echo $(curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" "$HOMESERVER$1")
+    curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" "$HOMESERVER$1"
 }
 
 # get_room_users $roomId
 get_room_users() {
-    echo $(mx_request "/_matrix/client/v3/rooms/$1/members")
+    mx_request "/_matrix/client/v3/rooms/$1/members"
 }
 
 # get_user_status $user_id
 get_user_status() {
-    echo $(mx_request "/_matrix/client/v3/presence/$1/status")
+    mx_request "/_matrix/client/v3/presence/$1/status"
 }
 
 # get_user_last_active $user_id
 get_user_last_active() {
-    echo $(get_user_status "$1" | jq '.last_active_ago')
+    get_user_status "$1" | jq '.last_active_ago'
 }
 
 get_inactive_users() {
